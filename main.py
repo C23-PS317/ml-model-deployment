@@ -80,5 +80,5 @@ async def create_upload_file(user_id: str, file: UploadFile):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-if __name__ == '__main6__':
+if __name__ == '__main__':
     uvicorn.run(app, port=8080, host="0.0.0.0")
