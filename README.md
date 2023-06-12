@@ -1,3 +1,5 @@
+![ml-model-diagram](https://github.com/C23-PS317/ml-model-deployment/assets/69651946/1978a426-cc45-4841-8b95-6e42cfb831f1)
+
 # ML Model Deployment
 
 ## Endpoint
