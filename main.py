@@ -21,12 +21,10 @@ with open('model/classes_v2.txt') as f:
 for className in lines:
     labels.append(className.strip('\n'))
 
-# Load the model
-model = load_model('model/food_keras_v6.h5')
+# Load model
+model = load_model('model/food_keras_v7.h5')
 
-# Firestore client
 db = firestore.Client()
-
 app = FastAPI()
 
 def upload_file_to_gcs(user_id: str, image_bytes: bytes, filename: str):
@@ -37,7 +35,6 @@ def upload_file_to_gcs(user_id: str, image_bytes: bytes, filename: str):
 
     blob.upload_from_string(image_bytes, content_type='image/jpeg')
 
-    # Make the blob publicly viewable
     blob.make_public()
 
     return blob.public_url
@@ -69,10 +66,10 @@ def predict(image_bytes: bytes, user_id: str):
                 "satuan": food_data['satuan'], 
                 "image_url": food_data['image_url']}
     else:
-        return {"error": f"No food named {predicted_class} found in database"}
+        return {"error": f"{predicted_class} not found in database"}
 
 @app.post("/predict/{user_id}")
-async def create_upload_file(user_id: str, file: UploadFile):
+async def upload_image(user_id: str, file: UploadFile):
     try:
         image_bytes = await file.read()
         prediction = predict(image_bytes, user_id)
