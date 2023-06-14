@@ -14,9 +14,10 @@
 
 ```json
 {
-  "nama": "air",
-  "kalori": 0,
-  "satuan": "ml",
-  "image_url": "https://storage.googleapis.com/foods-image/5TcC8rY4L7VsSR2lWAZiVnDDSgy2/AwMHLB3kXFV8pL6bWMmu"
+    "nama": "air",
+    "kalori": 0,
+    "satuan": "ml",
+    "image_db": "https://storage.googleapis.com/foods-image/foods/air_train%20(6).jpg",
+    "image_user": "https://storage.googleapis.com/foods-image/41OD8U1Tn0N3GC2VMkVH5HnFf2r2/air_train%20%282%29.jpg"
 }
 ```
