@@ -22,7 +22,7 @@ for className in lines:
     labels.append(className.strip('\n'))
 
 # Load model
-model = load_model('model/food_keras_v7.h5')
+model = load_model('model/food_keras_v6.h5')
 
 db = firestore.Client()
 app = FastAPI()
