@@ -1,6 +1,6 @@
-![ml-model-diagram](https://github.com/C23-PS317/ml-model-deployment/blob/main/ml-model-diagram.png?raw=true)
-
 # ML Model Deployment
+
+![ml-model-diagram](https://github.com/C23-PS317/ml-model-deployment/blob/main/ml-model-diagram.png?raw=true)
 
 ## Endpoint
 

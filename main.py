@@ -31,10 +31,8 @@ def upload_file_to_gcs(user_id: str, image_bytes: bytes, filename: str):
     bucket_name = "foods-image"
     storage_client = gcs.Client()
     bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(f'{user_id}/{filename}')  # filename is the original file name
-
+    blob = bucket.blob(f'{user_id}/{filename}')
     blob.upload_from_string(image_bytes, content_type='image/jpeg')
-
     blob.make_public()
 
     return blob.public_url
@@ -55,11 +53,10 @@ def predict(image_bytes: bytes, user_id: str, original_filename: str):
 
         if food.exists:
             food_data = food.to_dict()
-            # Add prediction to the 'foods-history' subcollection of the user
+            # Add result to foods-history subcollection
             user_ref = db.collection('users').document(user_id)
             food_history_doc_ref = user_ref.collection('foods-history').document()
-            # Update firestore food data with GCS image url
-            food_data['image_user'] = upload_file_to_gcs(user_id, image_bytes, original_filename)  # use original file name here
+            food_data['image_user'] = upload_file_to_gcs(user_id, image_bytes, original_filename)
             food_history_doc_ref.set(food_data)
 
             return {"nama": food_data['nama'], 
@@ -70,16 +67,15 @@ def predict(image_bytes: bytes, user_id: str, original_filename: str):
         else:
             return {"error": f"{predicted_class} not found in database"}
     except Exception as e:
-        return {"error": "The prediction has failed due to an issue with the input image's format or dimensions. Please try a different image."}
+        return {"error": "The prediction is failed, please try again later or use different image"}
 
 @app.post("/predict/{user_id}")
 async def upload_image(user_id: str, file: UploadFile):
     try:
         image_bytes = await file.read()
-        prediction = predict(image_bytes, user_id, file.filename)  # pass original file name here
+        prediction = predict(image_bytes, user_id, file.filename)
         return prediction
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-if __name__ == '__main__':
-    uvicorn.run(app, port=8080, host="0.0.0.0")
+if __name__ == '__main__': uvicorn.run(app, port=8080, host="0.0.0.0")
